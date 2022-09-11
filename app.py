@@ -7,7 +7,7 @@ import pafy
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET'])  
+@app.route('/', methods=['GET', 'POST'])  
 @cross_origin()
 def homePage():
     return render_template("new.html")
@@ -56,7 +56,7 @@ def index():
         return render_template('new.html')
 
 
-@app.route('/download/<text>')
+@app.route('/download/<text>', methods=['GET', 'POST'])
 def mylink(text):
     vdnld = pafy.new(text)
     quality = vdnld.getbest()
@@ -68,7 +68,7 @@ def mylink(text):
         print(e)
         return 'Error'
 
-@app.route("/comments/<vid>")
+@app.route("/comments/<vid>", methods=['GET', 'POST'])
 def comment(vid):
     comments = Comments(vid)
     reviews = []
@@ -90,4 +90,4 @@ def comment(vid):
 
 if __name__ == "__main__":
     #app.run(host='127.0.0.1', port=8001, debug=True)
-	app.run(port=5005, debug=True)
+	app.run(debug=True)
